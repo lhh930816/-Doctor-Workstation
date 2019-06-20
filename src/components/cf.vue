@@ -5,6 +5,7 @@
 				      	:data="tableData"
 								border
 								stripe
+								@selection-change="checkbox"
 								ref='tables'>
 				      	<el-table-column
 				        	label="操作"
@@ -17,7 +18,11 @@
 				      	</el-table-column>
 				      	<el-table-column
 								align='center'
-								 type="selection"
+								 type="selection"  
+								width='50px'>
+				      	</el-table-column>
+								<el-table-column
+								align='center'
 								width='50px'>
 				      	</el-table-column>
 				      	<el-table-column
@@ -185,168 +190,186 @@
            </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-              tableData: [],
-						options:[{
+		export default {
+			data () {
+				return {
+					tableData: [],
+					multipleSelection: [],
+					options:[{
 						value: '选项1',
 						text: '全部'
-					},
-					{
-						value: '选项2',
-						text: '西药费'
-					},
-					{
-						value: '选项3',
-						text: '中成药(西)'
-					},
-					{
-						value: '选项4',
-						text: '一般诊疗费'
+						},
+						{
+							value: '选项2',
+							text: '西药费'
+						},
+						{
+							value: '选项3',
+							text: '中成药(西)'
+						},
+						{
+							value: '选项4',
+							text: '一般诊疗费'
 					}],
 					frequency:[{
-						value: 0,
-						text: '全部'
-					},
-					{
-						value: 1,
-						text: '西药费'
-					},
-					{
-						value: 2,
-						text: '中成药(西)'
-					},
-					{
-						value: 3,
-						text: '一般诊疗费'
-					}],
+							value: 0,
+							text: 'q12h'
+						},
+						{
+							value: 1,
+							text: 'q2h'
+						},
+						{
+							value: 2,
+							text: 'q5h'
+						},
+						{
+							value: 3,
+							text: 'q6h'
+						},
+						{
+							value: 4,
+							text: 'q72h'
+						},
+						{
+							value: 5,
+							text: 'q8h'
+						},
+						{
+							value: 6,
+							text: 'st'
+						},
+						{
+							value: 7,
+							text: 'prn'
+						},
+					],
 					channel:[{
-						value: 1,
-						text: '全部'
-					},
-					{
-						value: 2,
-						text: '西药费'
-					},
-					{
-						value: 3,
-						text: '中成药(西)'
-					},
-					{
-						value: 4,
-						text: '一般诊疗费'
+							value: 1,
+							text: '全部'
+						},
+						{
+							value: 2,
+							text: '西药费'
+						},
+						{
+							value: 3,
+							text: '中成药(西)'
+						},
+						{
+							value: 4,
+							text: '一般诊疗费'
+						}],
+					byo:[
+						{
+							value: 1,
+							text: '是'
+						},
+						{
+							value: 0,
+							text: '否'
+						}
+					],		
+					treatment:[{
+							value:1,
+							text: '是'
+						},
+						{
+							value: 0,
+							text: '否'
 					}],
-				byo:[
-					{
-						value: 1,
-						text: '是'
-					},
-					{
-						value: 0,
-						text: '否'
-					}
-				],		
-			treatment:[{
-						value:1,
-						text: '是'
-					},
-					{
-						value: 0,
-						text: '否'
-				}],
-			data: [{
-	         code: "FI-SW-01",
-	         name: "Koi",
-	         unitcost: 10.0,
-	         status: "P",
-	         listprice: 36.5,
-	         attr: "Large",
-	         itemid: "EST-1"
-	       },
-	       {
-	         code: "K9-DL-01",
-	         name: "Dalmation",
-	         unitcost: 12.0,
-	         status: "P",
-	         listprice: 18.5,
-	         attr: "Spotted Adult Female",
-	         itemid: "EST-10"
-	       },
-	       {
-	         code: "RP-SN-01",
-	         name: "Rattlesnake",
-	         unitcost: 12.0,
-	         status: "P",
-	         listprice: 38.5,
-	         attr: "Venomless",
-	         itemid: "EST-11"
-	       },
-	       {
-	         code: "RP-SN-01",
-	         name: "Rattlesnake",
-	         unitcost: 12.0,
-	         status: "P",
-	         listprice: 26.5,
-	         attr: "Rattleless",
-	         itemid: "EST-12"
-	       },
-	       {
-	         code: "RP-LI-02",
-	         name: "Iguana",
-	         unitcost: 12.0,
-	         status: "P",
-	         listprice: 35.5,
-	         attr: "Green Adult",
-	         itemid: "EST-13"
-	       },
-	       {
-	         code: "FL-DSH-01",
-	         name: "Manx",
-	         unitcost: 12.0,
-	         status: "P",
-	         listprice: 158.5,
-	         attr: "Tailless",
-	         itemid: "EST-14"
-	       },
-	       {
-	         code: "FL-DSH-01",
-	         name: "Manx",
-	         unitcost: 12.0,
-	         status: "P",
-	         listprice: 83.5,
-	         attr: "With tail",
-	         itemid: "EST-15"
-	       },
-	       {
-	         code: "FL-DLH-02",
-	         name: "Persian",
-	         unitcost: 12.0,
-	         status: "P",
-	         listprice: 23.5,
-	         attr: "Adult Female",
-	         itemid: "EST-16"
-	        },
-	        {
-	          code: "FL-DLH-02",
-	          name: "Persian",
-	          unitcost: 12.0,
-	          status: "P",
-	          listprice: 89.5,
-	          attr: "Adult Male",
-	          itemid: "EST-17"
-	        },
-	        {
-	          code: "AV-CB-01",
-	          name: "Amazon Parrot",
-	          unitcost: 92.0,
-	          status: "P",
-	          listprice: 63.5,
-	          attr: "Adult Male",
-	          itemid: "EST-18"
-	        }],
-          	}
-       },
+					data: [{
+							code: "FI-SW-01",
+							name: "Koi",
+							unitcost: 10.0,
+							status: "P",
+							listprice: 36.5,
+							attr: "Large",
+							itemid: "EST-1"
+						},
+						{
+							code: "K9-DL-01",
+							name: "Dalmation",
+							unitcost: 12.0,
+							status: "P",
+							listprice: 18.5,
+							attr: "Spotted Adult Female",
+							itemid: "EST-10"
+						},
+						{
+							code: "RP-SN-01",
+							name: "Rattlesnake",
+							unitcost: 12.0,
+							status: "P",
+							listprice: 38.5,
+							attr: "Venomless",
+							itemid: "EST-11"
+						},
+						{
+							code: "RP-SN-01",
+							name: "Rattlesnake",
+							unitcost: 12.0,
+							status: "P",
+							listprice: 26.5,
+							attr: "Rattleless",
+							itemid: "EST-12"
+						},
+						{
+							code: "RP-LI-02",
+							name: "Iguana",
+							unitcost: 12.0,
+							status: "P",
+							listprice: 35.5,
+							attr: "Green Adult",
+							itemid: "EST-13"
+						},
+						{
+							code: "FL-DSH-01",
+							name: "Manx",
+							unitcost: 12.0,
+							status: "P",
+							listprice: 158.5,
+							attr: "Tailless",
+							itemid: "EST-14"
+						},
+						{
+							code: "FL-DSH-01",
+							name: "Manx",
+							unitcost: 12.0,
+							status: "P",
+							listprice: 83.5,
+							attr: "With tail",
+							itemid: "EST-15"
+						},
+						{
+							code: "FL-DLH-02",
+							name: "Persian",
+							unitcost: 12.0,
+							status: "P",
+							listprice: 23.5,
+							attr: "Adult Female",
+							itemid: "EST-16"
+							},
+							{
+								code: "FL-DLH-02",
+								name: "Persian",
+								unitcost: 12.0,
+								status: "P",
+								listprice: 89.5,
+								attr: "Adult Male",
+								itemid: "EST-17"
+							},
+							{
+								code: "AV-CB-01",
+								name: "Amazon Parrot",
+								unitcost: 92.0,
+								status: "P",
+								listprice: 63.5,
+								attr: "Adult Male",
+								itemid: "EST-18"
+							}],
+				}
+			},
 			created () {
 				this.init();
 			},
@@ -362,8 +385,7 @@
 						val: '选项1',
 						val1: 0,
 						val2: 0,
-						tj: 1,
-						pc: 0
+						czbz: 0
 					};
 					this.tableData.push(data);
 				},
@@ -405,6 +427,10 @@
 							this.tableData.splice(i,1);
 						}
 					}
+				},
+				checkbox (val) {
+					this.multipleSelection = val;
+					this.$emit('group', {multipleSelection: this.multipleSelection,tableData:this.tableData});  //通过$emit传递数据
 				}
     	}
     }

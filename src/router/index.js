@@ -19,6 +19,18 @@ export default new Router({
     {
       path: '/cfs',
       component: resolve => require(['@/views/cfs.vue'], resolve)
+    },
+    {
+      path: '/tab',
+      component: resolve => require(['@/views/tab.vue'], resolve)
+    },
+    {
+      path: '/index',
+      component: resolve => require(['@/views/index.vue'], resolve)
+    },
+    {
+      path: '/search',
+      component: resolve => require(['@/views/search.vue'], resolve)
     }
   ]
 })
